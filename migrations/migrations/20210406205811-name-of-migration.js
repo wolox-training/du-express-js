@@ -34,6 +34,8 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false
         }
+      }, {
+        timestamps: true
       });
   },
 
