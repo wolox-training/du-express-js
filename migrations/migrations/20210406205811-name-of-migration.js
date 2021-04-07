@@ -17,11 +17,11 @@ module.exports = {
           primaryKey: true,
           allowNull: false
         },
-        first_name: {
+        firstName: {
           type: Sequelize.STRING,
           allowNull: false
         },
-        last_name: {
+        lastName: {
           type: Sequelize.STRING,
           allowNull: false
         },
@@ -45,5 +45,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
+      return queryInterface.dropTable('users');
   }
 };
