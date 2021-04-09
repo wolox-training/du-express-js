@@ -1,6 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
+<<<<<<< HEAD
     'User',
+=======
+    'user',
+>>>>>>> db899ebc4404eaf8ba2fa080fc4bf4c94655871a
     {
       id: {
         type: DataTypes.INTEGER,
@@ -28,7 +32,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
+<<<<<<< HEAD
       underscored: true,
+=======
+>>>>>>> db899ebc4404eaf8ba2fa080fc4bf4c94655871a
       timestamps: true
     }
   );
