@@ -1,27 +1,19 @@
 const { User } = require('../models');
 const errors = require('../errors');
+const logger = require('../logger');
 
-const getUserByEmail = email => {
-  try {
-    return User.findAll({
-      where: {
-        email
-      }
-    });
-  } catch {
-    throw errors.databaseError('Error querying users by email');
-  }
-};
+exports.getUserByEmail = email =>
+  User.findOne({
+    where: {
+      email
+    }
+  }).catch(error => {
+    logger.error(`Error querying user by email: ${JSON.stringify(error)}`);
+    throw errors.databaseError('Error querying user by email');
+  });
 
-const createUser = user => {
-  try {
-    return User.create(user);
-  } catch {
+exports.createUser = user =>
+  User.create(user).catch(error => {
+    logger.error(`Error creating user: ${JSON.stringify(error)}`);
     throw errors.databaseError('Error creating user.');
-  }
-};
-
-module.exports = {
-  getUserByEmail,
-  createUser
-};
+  });

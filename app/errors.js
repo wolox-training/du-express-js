@@ -1,5 +1,3 @@
-// const { message } = require('prompt');
-
 const internalError = (message, internalCode) => ({
   message,
   internalCode
