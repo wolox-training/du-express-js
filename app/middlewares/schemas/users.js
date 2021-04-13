@@ -7,8 +7,8 @@ const errorMessages = error => ({
 
 const user = joi
   .object({
-    firstName: joi.string().required(),
-    lastName: joi.string().required(),
+    first_name: joi.string().required(),
+    last_name: joi.string().required(),
     email: joi
       .string()
       .pattern(/^([\w.])+@wolox\.(\w)+$/)
