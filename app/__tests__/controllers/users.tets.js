@@ -38,6 +38,7 @@ describe('Users controller', () => {
       id: 1,
       password: undefined
     };
+    user.password = 'encrypted password';
 
     await usersController.registerUser(req, res, next);
 
