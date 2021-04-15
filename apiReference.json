@@ -1,0 +1,160 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Witter",
+    "description": "Wits and user management API",
+    "termsOfService": "http://api_url/terms/",
+    "contact": {
+      "name": "Wolox Team",
+      "email": "daniel.uruena@wolox.co",
+      "url": "https://www.wolox.com.ar/"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081/",
+      "description": "Local server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Sign up user",
+        "description": "Sign up user",
+        "operationId": "signUp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "the field 'email' is required",
+                  "internal_code": "input_data_error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+        "type": "integer",
+        "description": "Users identifier",
+        "example": 1
+      },
+      "firstName": {
+        "type": "string",
+        "description": "First name of user",
+        "example": "Jhon"
+      },
+      "lastName": {
+        "type": "string",
+        "description": "Last name of user",
+        "example": "Doe"
+      },
+      "email": {
+        "type": "string",
+        "description": "user email from wolox domail",
+        "example": "email@wolox.com"
+      },
+      "password": {
+        "type": "string",
+        "description": "user password to sign in"
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "$ref": "#/components/schemas/firstName"
+          },
+          "last_name": {
+            "$ref": "#/components/schemas/lastName"
+          },
+          "email": {
+            "$ref": "#/components/schemas/email"
+          },
+          "password": {
+            "$ref": "#/components/schemas/password"
+          }
+        }
+      },
+      "Users": {
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "first_name": {
+            "$ref": "#/components/schemas/firstName"
+          },
+          "last_name": {
+            "$ref": "#/components/schemas/lastName"
+          },
+          "email": {
+            "$ref": "#/components/schemas/email"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "internal_code": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
