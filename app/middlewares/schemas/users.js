@@ -5,7 +5,14 @@ const errorMessages = error => ({
   'string.base': `the field '${error.path[0]}' must be a string'`
 });
 
-const user = joi
+const generateAppError = errors =>
+  errors.map(error => {
+    const messages = errorMessages(error);
+    error.message = messages[error.code] || error.message;
+    return error;
+  });
+
+exports.userSchema = joi
   .object({
     first_name: joi.string().required(),
     last_name: joi.string().required(),
@@ -26,12 +33,18 @@ const user = joi
       })
   })
   .required()
-  .error(errors =>
-    errors.map(error => {
-      const messages = errorMessages(error);
-      error.message = messages[error.code] || error.message;
-      return error;
-    })
-  );
+  .error(generateAppError);
 
-module.exports = user;
+exports.loginSchema = joi
+  .object({
+    email: joi
+      .string()
+      .pattern(/^([\w.])+@wolox\.(\w)+$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'email must be from Wolox domain'
+      }),
+    password: joi.string().required()
+  })
+  .required()
+  .error(generateAppError);
