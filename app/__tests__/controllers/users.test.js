@@ -170,4 +170,24 @@ describe('Users controller', () => {
     expect(response.body).toEqual(error);
     expect(response.status).toBe(400);
   });
+
+  test('should return users when users endpoint is called', async () => {
+    const usersResponse = {
+      users: [
+        {
+          id: 1,
+          first_name: 'name',
+          last_name: 'last name',
+          email: 'email@wolox.com'
+        }
+      ]
+    };
+    await request(app)
+      .post('/users')
+      .send(user);
+
+    const response = await request(app).get('/users');
+
+    expect(response.body).toEqual(usersResponse);
+  });
 });
