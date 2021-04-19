@@ -68,6 +68,34 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "inner exception from server",
+                  "internal_code": "default_error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error creating user.",
+                  "internal_code": "database_error"
+                }
+              }
+            }
           }
         }
       }
@@ -83,20 +111,24 @@
       "firstName": {
         "type": "string",
         "description": "First name of user",
+        "required": true,
         "example": "Jhon"
       },
       "lastName": {
         "type": "string",
         "description": "Last name of user",
+        "required": true,
         "example": "Doe"
       },
       "email": {
         "type": "string",
-        "description": "user email from wolox domail",
+        "description": "user email from Wolox domain",
+        "required": true,
         "example": "email@wolox.com"
       },
       "password": {
         "type": "string",
+        "required": true,
         "description": "user password to sign in"
       },
       "User": {
