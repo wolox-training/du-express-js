@@ -1,27 +1,46 @@
 module.exports = {
-  userId: {
+  id: {
     type: 'integer',
-    example: 7
+    description: 'Users identifier',
+    example: 1
   },
-  username: {
+  firstName: {
     type: 'string',
-    example: 'tom99'
+    description: 'First name of user',
+    required: true,
+    example: 'Jhon'
   },
-  userEmail: {
+  lastName: {
     type: 'string',
-    example: 'tom.engels@wolox.com.ar'
+    description: 'Last name of user',
+    required: true,
+    example: 'Doe'
+  },
+  email: {
+    type: 'string',
+    description: 'user email from Wolox domain',
+    required: true,
+    example: 'email@wolox.com'
+  },
+  password: {
+    type: 'string',
+    required: true,
+    description: 'user password to sign in'
   },
   User: {
     type: 'object',
     properties: {
-      id: {
-        $ref: '#/components/schemas/userId'
+      first_name: {
+        $ref: '#/components/schemas/firstName'
       },
-      username: {
-        $ref: '#/components/schemas/username'
+      last_name: {
+        $ref: '#/components/schemas/lastName'
       },
       email: {
-        $ref: '#/components/schemas/userEmail'
+        $ref: '#/components/schemas/email'
+      },
+      password: {
+        $ref: '#/components/schemas/password'
       }
     }
   },
@@ -33,6 +52,34 @@ module.exports = {
         items: {
           $ref: '#/components/schemas/User'
         }
+      }
+    }
+  },
+  UserResponse: {
+    type: 'object',
+    properties: {
+      id: {
+        $ref: '#/components/schemas/id'
+      },
+      first_name: {
+        $ref: '#/components/schemas/firstName'
+      },
+      last_name: {
+        $ref: '#/components/schemas/lastName'
+      },
+      email: {
+        $ref: '#/components/schemas/email'
+      }
+    }
+  },
+  Error: {
+    type: 'object',
+    properties: {
+      message: {
+        type: 'string'
+      },
+      internal_code: {
+        type: 'string'
       }
     }
   }
