@@ -36,3 +36,15 @@ exports.login = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getUsers = async (req, res, next) => {
+  try {
+    let users = await userService.getUsers();
+    if (users.length > 0) {
+      users = users.map(user => serializeUser(user.dataValues));
+    }
+    res.json({ users });
+  } catch (error) {
+    next(error);
+  }
+};

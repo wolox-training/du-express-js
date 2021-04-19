@@ -17,3 +17,9 @@ exports.createUser = user =>
     logger.error(`Error creating user: ${JSON.stringify(error)}`);
     throw errors.databaseError('Error creating user.');
   });
+
+exports.getUsers = () =>
+  User.findAll().catch(error => {
+    logger.error(`Error getting users from database: ${JSON.stringify(error)}`);
+    throw errors.databaseError('Error getting users');
+  });
