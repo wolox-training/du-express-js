@@ -7,33 +7,30 @@ const port = config.common.api.port || 8080;
 module.exports = {
   openapi: '3.0.1',
   info: {
-    version: '0.1.0',
-    title: 'WTraining',
-    description: 'WTraining',
-    termsOfService: '',
+    version: '1.0.0',
+    title: 'Witter',
+    description: 'Wits and user management API',
+    termsOfService: 'http://api_url/terms/',
     contact: {
-      name: 'Wolox',
-      email: 'tls@wolox.com.ar',
+      name: 'Wolox Team',
+      email: 'daniel.uruena@wolox.co',
       url: 'https://www.wolox.com.ar/'
     },
     license: {
-      name: 'MIT'
+      name: 'Apache 2.0',
+      url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
     }
   },
   servers: [
     {
       url: `http://localhost:${port}/`,
       description: 'Local server'
-    },
-    {
-      url: 'https://api_url_testing',
-      description: 'Testing server'
     }
   ],
   security: [],
   tags: [
     {
-      name: 'CRUD operations'
+      name: 'Users'
     }
   ],
   paths,
