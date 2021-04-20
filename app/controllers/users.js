@@ -39,7 +39,8 @@ exports.login = async (req, res, next) => {
 
 exports.getUsers = async (req, res, next) => {
   try {
-    let users = await userService.getUsers();
+    const pagination = req.query;
+    let users = await userService.getUsers(pagination);
     if (users.length > 0) {
       users = users.map(user => serializeUser(user.dataValues));
     }

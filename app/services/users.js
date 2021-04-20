@@ -18,8 +18,11 @@ exports.createUser = user =>
     throw errors.databaseError('Error creating user.');
   });
 
-exports.getUsers = () =>
-  User.findAll().catch(error => {
+exports.getUsers = pagination =>
+  User.findAll({
+    offset: pagination.size * (pagination.page - 1),
+    limit: pagination.size
+  }).catch(error => {
     logger.error(`Error getting users from database: ${JSON.stringify(error)}`);
     throw errors.databaseError('Error getting users');
   });
