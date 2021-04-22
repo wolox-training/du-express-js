@@ -13,9 +13,10 @@ exports.registerUser = async (req, res, next) => {
       throw errors.input_data_error(`Already exist an user with this email: ${userData.email}`);
     }
     userData.password = await encryptPassword(userData.password);
+    userData.isAdmin = false;
     const user = await userService.createUser(userData);
     logger.info(`User '${user.firstName}' has been created successfully.`);
-    res.json(serializeUser(user.dataValues));
+    res.json(serializeUser(user));
   } catch (error) {
     next(error);
   }
@@ -45,6 +46,29 @@ exports.getUsers = async (req, res, next) => {
       users = users.map(user => serializeUser(user.dataValues));
     }
     res.json({ users });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createAdminUser = async (req, res, next) => {
+  try {
+    const userData = mapperUser(req.body);
+    const existingUser = await userService.getUserByEmail(userData.email);
+    if (existingUser) {
+      if (existingUser.isAdmin) {
+        throw errors.input_data_error(`user with email '${existingUser.email}' is already admin`);
+      }
+      existingUser.isAdmin = true;
+      await userService.upgradeUser(existingUser.id);
+      res.json(serializeUser(existingUser));
+      return;
+    }
+    userData.password = await encryptPassword(userData.password);
+    userData.isAdmin = true;
+    const user = await userService.createUser(userData);
+    logger.info(`User '${user.firstName}' has been created successfully.`);
+    res.json(serializeUser(user));
   } catch (error) {
     next(error);
   }

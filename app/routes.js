@@ -8,8 +8,14 @@ exports.init = app => {
   app.post('/users/sessions', userMiddlewares.validateCredentialsFormat, userController.login);
   app.get(
     '/users',
-    userMiddlewares.validateAuthorization,
+    userMiddlewares.validateAuthorization(),
     userMiddlewares.validatePagination,
     userController.getUsers
+  );
+  app.post(
+    '/admin/users',
+    userMiddlewares.validateAuthorization(true),
+    userMiddlewares.validateUserModel,
+    userController.createAdminUser
   );
 };
