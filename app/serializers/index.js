@@ -5,3 +5,11 @@ exports.serializeUser = user => ({
   email: user.email,
   is_admin: user.isAdmin
 });
+
+exports.serializeWeet = weet => ({
+  id: weet.id,
+  content: weet.content,
+  user_id: weet.userId,
+  created_at: weet.createdAt,
+  updated_at: weet.updatedAt
+});

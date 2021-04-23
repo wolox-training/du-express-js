@@ -1,5 +1,6 @@
 const { healthCheck } = require('./controllers/healthCheck');
 const userController = require('./controllers/users');
+const weetController = require('./controllers/weets');
 const userMiddlewares = require('./middlewares/users');
 
 exports.init = app => {
@@ -18,4 +19,5 @@ exports.init = app => {
     userMiddlewares.validateUserModel,
     userController.createAdminUser
   );
+  app.post('/weets', userMiddlewares.validateAuthorization(), weetController.createWeet);
 };
