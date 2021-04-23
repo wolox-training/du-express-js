@@ -1,7 +1,7 @@
-const userSchema = require('./schemas/users');
+const { userSchema, loginSchema } = require('./schemas/users');
 const errors = require('../errors');
 
-const validateUserModel = (req, res, next) => {
+exports.validateUserModel = (req, res, next) => {
   try {
     const { error } = userSchema.validate(req.body);
     if (error) {
@@ -13,6 +13,14 @@ const validateUserModel = (req, res, next) => {
   }
 };
 
-module.exports = {
-  validateUserModel
+exports.validateCredentialsFormat = (req, res, next) => {
+  try {
+    const { error } = loginSchema.validate(req.body);
+    if (error) {
+      next(errors.input_data_error(error.message));
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
 };

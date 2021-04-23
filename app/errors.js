@@ -14,3 +14,6 @@ exports.external_api_error = message => internalError(message, exports.EXTERNAL_
 
 exports.INPUT_DATA_ERROR = 'input_data_error';
 exports.input_data_error = message => internalError(message, exports.INPUT_DATA_ERROR);
+
+exports.UNAUTHORIZED_ERROR = 'unauthorized';
+exports.unauthorized_error = message => internalError(message, exports.UNAUTHORIZED_ERROR);
