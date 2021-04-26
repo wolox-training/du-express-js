@@ -3,5 +3,6 @@ exports.mapperUser = user => ({
   firstName: user.first_name,
   lastName: user.last_name,
   email: user.email,
-  password: user.password
+  password: user.password,
+  isAdmin: user.is_admin
 });
