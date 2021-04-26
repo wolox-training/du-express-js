@@ -1,6 +1,7 @@
 const { userSchema, loginSchema, paginationSchema } = require('./schemas/users');
 const errors = require('../errors');
 const { verifyToken } = require('../helpers');
+const { mapperUser } = require('../mappers');
 
 exports.validateUserModel = (req, res, next) => {
   try {
@@ -26,13 +27,18 @@ exports.validateCredentialsFormat = (req, res, next) => {
   }
 };
 
-exports.validateAuthorization = (req, res, next) => {
+exports.validateAuthorization = adminValidation => (req, res, next) => {
   try {
     const token = req.get('authorization').split(' ')[1];
-    verifyToken(token);
-    next();
+    const user = mapperUser(verifyToken(token));
+    const isAuthorized = (adminValidation && user.isAdmin) || !adminValidation;
+    if (isAuthorized) {
+      next();
+      return;
+    }
+    next(errors.unauthorized_error('User not authorized to perform this action'));
   } catch (error) {
-    next(errors.unauthorized_error('Invalid token.'));
+    next(errors.unauthorized_error('Invalid token'));
   }
 };
 
