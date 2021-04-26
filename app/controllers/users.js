@@ -36,3 +36,14 @@ exports.login = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getUsers = async (req, res, next) => {
+  try {
+    const pagination = req.query;
+    const users = await userService.getUsers(pagination);
+    const usersResponse = users.map(user => serializeUser(user.dataValues));
+    res.json({ users: usersResponse });
+  } catch (error) {
+    next(error);
+  }
+};

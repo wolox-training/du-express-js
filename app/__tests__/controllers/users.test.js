@@ -170,4 +170,72 @@ describe('Users controller', () => {
     expect(response.body).toEqual(error);
     expect(response.status).toBe(400);
   });
+
+  test('should return users when users endpoint is called', async () => {
+    const usersResponse = {
+      users: [
+        {
+          id: 1,
+          first_name: 'name',
+          last_name: 'last name',
+          email: 'email@wolox.com'
+        }
+      ]
+    };
+    const credentials = {
+      email: 'email@wolox.com',
+      password: 'Asdf1234'
+    };
+    await request(app)
+      .post('/users')
+      .send(user);
+    const authenticate = await request(app)
+      .post('/users/sessions')
+      .send(credentials);
+    const { token } = authenticate.body;
+
+    const response = await request(app)
+      .get('/users')
+      .set({ Authorization: `Bearer ${token}` })
+      .query({ page: 1, size: 1 });
+
+    expect(response.body).toEqual(usersResponse);
+  });
+
+  test('should return unauthorized error when request has not token', async () => {
+    const error = {
+      internal_code: 'unauthorized',
+      message: 'Invalid token.'
+    };
+    const response = await request(app)
+      .get('/users')
+      .query({ page: 1, size: 1 });
+
+    expect(response.body).toEqual(error);
+  });
+
+  test('should return required field error when request has not pagination parameters', async () => {
+    const error = {
+      internal_code: 'input_data_error',
+      message: "the field 'size' is required"
+    };
+    const credentials = {
+      email: 'email@wolox.com',
+      password: 'Asdf1234'
+    };
+    await request(app)
+      .post('/users')
+      .send(user);
+    const authenticate = await request(app)
+      .post('/users/sessions')
+      .send(credentials);
+    const { token } = authenticate.body;
+
+    const response = await request(app)
+      .get('/users')
+      .set({ Authorization: `Bearer ${token}` })
+      .query({ page: 1 });
+
+    expect(response.body).toEqual(error);
+  });
 });

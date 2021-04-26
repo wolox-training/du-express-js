@@ -2,7 +2,9 @@ const joi = require('joi');
 
 const errorMessages = error => ({
   'any.required': `the field '${error.path[0]}' is required`,
-  'string.base': `the field '${error.path[0]}' must be a string'`
+  'string.base': `the field '${error.path[0]}' must be a string'`,
+  'number.base': `the field '${error.path[0]}' must be a number`,
+  'number.min': `the field '${error.path[0]}' must be greater than ${error.local.limit}`
 });
 
 const generateAppError = errors =>
@@ -45,6 +47,20 @@ exports.loginSchema = joi
         'string.pattern.base': 'email must be from Wolox domain'
       }),
     password: joi.string().required()
+  })
+  .required()
+  .error(generateAppError);
+
+exports.paginationSchema = joi
+  .object({
+    page: joi
+      .number()
+      .min(1)
+      .required(),
+    size: joi
+      .number()
+      .min(1)
+      .required()
   })
   .required()
   .error(generateAppError);
