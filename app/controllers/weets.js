@@ -18,3 +18,13 @@ exports.createWeet = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getWeets = async (req, res, next) => {
+  try {
+    const pagination = req.query;
+    const weets = await weetsService.getWeets(pagination);
+    res.json({ weets: weets.map(serializeWeet) });
+  } catch (error) {
+    next(error);
+  }
+};
