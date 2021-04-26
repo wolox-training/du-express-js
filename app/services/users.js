@@ -26,3 +26,9 @@ exports.getUsers = pagination =>
     logger.error(`Error getting users from database: ${JSON.stringify(error)}`);
     throw errors.databaseError('Error getting users');
   });
+
+exports.upgradeUser = userId =>
+  User.update({ isAdmin: true }, { where: { id: userId } }).catch(error => {
+    logger.error(`Error updating user: ${JSON.stringify(error)}`);
+    throw errors.databaseError('Error updating user');
+  });
