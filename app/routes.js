@@ -20,4 +20,10 @@ exports.init = app => {
     userController.createAdminUser
   );
   app.post('/weets', userMiddlewares.validateAuthorization(), weetController.createWeet);
+  app.get(
+    '/weets',
+    userMiddlewares.validateAuthorization(),
+    userMiddlewares.validatePagination,
+    weetController.getWeets
+  );
 };

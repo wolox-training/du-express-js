@@ -57,7 +57,7 @@ exports.paginationSchema = joi
       .number()
       .min(1)
       .required(),
-    size: joi
+    limit: joi
       .number()
       .min(1)
       .required()
