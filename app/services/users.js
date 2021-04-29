@@ -18,7 +18,7 @@ exports.createUser = user =>
     throw errors.databaseError('Error creating user.');
   });
 
-  exports.getUsers = ({ page, limit }) =>
+exports.getUsers = ({ page, limit }) =>
   User.findAll({
     offset: limit * (page - 1),
     limit
